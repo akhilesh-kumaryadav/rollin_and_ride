@@ -29,3 +29,4 @@ dist-ssr
 *.sw?
 
 .DS_Store
+README.md
