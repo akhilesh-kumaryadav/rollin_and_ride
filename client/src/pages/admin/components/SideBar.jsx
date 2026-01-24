@@ -45,7 +45,7 @@ const SideBar = () => {
               className="items-center flex gap-3 mt-4 ml-3 text-xl font-extrabold text-blue-500 tracking-tight "
             >
               <SiShopware />
-              Rent a Ride
+              Rollin & Ride
             </Link>
             <TooltipComponent content={"menu"} position="BottomCenter">
               <button

@@ -73,7 +73,7 @@ const UserProfileSidebar = () => {
               className="items-center flex gap-3 mt-4 ml-3 text-xl font-extrabold text-black tracking-tight "
             >
               <SiShopware />
-              Rent a Ride
+              Rollin & Ride
             </Link>
             {/* hide sidebar button */}
             <TooltipComponent content={"menu"} position="BottomCenter">

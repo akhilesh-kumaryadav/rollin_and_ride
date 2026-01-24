@@ -20,7 +20,7 @@ mongoose
   .then(() => {
     console.log("Connection Established to MongoDB Database.");
     App.listen(process.env.PORT, () => {
-      console.log(`Rollin Server is Up and Listening!!! @ http://localhost:${process.env.PORT}`);
+      console.log(`Rollin & Ride Server is Up and Listening!!! @ http://localhost:${process.env.PORT}`);
     });
   })
   .catch((error) => console.error(error));
