@@ -67,13 +67,13 @@ function SignIn() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${BASE_URL}/api/auth/signin`, {
+      const res = await fetch('/api/auth/signin', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      
+
       if (data?.accessToken) {
         localStorage.removeItem(("accessToken"))
         localStorage.setItem("accessToken", data.accessToken);
@@ -83,7 +83,7 @@ function SignIn() {
         localStorage.setItem("refreshToken", data.refreshToken)
       }
 
-      if (data.succes === false || !res.ok) {
+      if (data.success === false || !res.ok) {
         dispatch(loadingEnd());
         dispatch(signInFailure(data));
 

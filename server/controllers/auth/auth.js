@@ -108,7 +108,7 @@ export const signIn = async (req, res, next) => {
 
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email }, { password: 1 });
+    let user = await User.findOne({ email }, { password: 1 });
     if (!user) {
       throw new AppError("User not found.", NOT_FOUND);
     }
@@ -180,7 +180,9 @@ export const signIn = async (req, res, next) => {
       domain: "rent-a-ride-two.vercel.app" // ATTENTION
     })
 
-    res.status(OK).json({success: true, message: "User logged in successfully."});
+    user = await User.findOne({ email },);
+
+    res.status(OK).json({success: true, message: "User logged in successfully.", accessToken: user.accessToken, refreshToken: user.refreshToken,  isAdmin:user.isAdmin, isUser: user.isUser});
 
     next();
   } catch (error) {

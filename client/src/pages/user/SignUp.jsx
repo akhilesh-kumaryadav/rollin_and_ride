@@ -16,6 +16,7 @@ const schema = z.object({
       message: "Invalid email address",
     }),
   password: z.string().min(4, { message: "minimum 4 characters required" }),
+  phoneNumber: z.string()
 });
 
 function SignUp() {
@@ -77,7 +78,7 @@ function SignUp() {
               type="text"
               id="username"
               className="text-black bg-slate-100 p-3 rounded-md w-full"
-              placeholder="UserName"
+              placeholder="User Name"
               {...register("username")}
             />
             {errors.username && (
@@ -93,13 +94,29 @@ function SignUp() {
               type="text"
               id="email"
               className="text-black bg-slate-100 p-3 rounded-md w-full"
-              placeholder="Email"
+              placeholder="Email Address"
               {...register("email")}
             />
 
             {errors.email && (
               <p className="text-red-500 text-[8px] pt-1">
                 {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <input
+              type="text"
+              id="phoneNumber"
+              className="text-black bg-slate-100 p-3 rounded-md w-full"
+              placeholder="Phone Number"
+              {...register("phoneNumber")}
+            />
+
+            {errors.phoneNumber && (
+              <p className="text-red-500 text-[8px] pt-1">
+                {errors.phoneNumber.message}
               </p>
             )}
           </div>
