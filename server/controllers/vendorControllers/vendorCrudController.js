@@ -57,7 +57,7 @@ export const vendorAddVehicle = async (req, res, next) => {
                 message: "error while uploading to cloudinary",
               });
             }
-          })
+          }),
         );
         try {
           if (uploadedImages.length > 0) {
@@ -105,7 +105,7 @@ export const vendorAddVehicle = async (req, res, next) => {
       }
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     next(errorHandler(400, "vehicle failed to add "));
   }
 };
@@ -173,7 +173,7 @@ export const vendorEditVehicles = async (req, res, next) => {
           isRejected: false,
         },
 
-        { new: true }
+        { new: true },
       );
       if (!edited) {
         return next(errorHandler(404, "data with this id not found"));
@@ -188,8 +188,8 @@ export const vendorEditVehicles = async (req, res, next) => {
         return next(
           errorHandler(
             409,
-            `${duplicateField} '${duplicateValue}' already exists`
-          )
+            `${duplicateField} '${duplicateValue}' already exists`,
+          ),
         );
       }
     }
@@ -206,7 +206,7 @@ export const vendorDeleteVehicles = async (req, res, next) => {
     const softDeleted = await vehicle.findOneAndUpdate(
       { _id: vehicle_id },
       { isDeleted: "true" },
-      { new: true }
+      { new: true },
     );
     if (!softDeleted) {
       next(errorHandler(400, "vehicle not found"));

@@ -18,7 +18,7 @@ export const editUserProfile = async (req, res, next) => {
           adress: updatedProfileData.adress,
         },
       },
-      { new: true }
+      { new: true },
     );
 
     if (!updatedUser) {

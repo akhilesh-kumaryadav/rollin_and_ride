@@ -48,7 +48,7 @@ export const fetchLatestBooking = async (user_id, dispatch) => {
 export async function displayRazorpay(values, navigate, dispatch) {
   try {
     const res = await loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
+      "https://checkout.razorpay.com/v1/checkout.js",
     );
 
     let refreshToken = localStorage.getItem("refreshToken");
@@ -117,9 +117,9 @@ export async function displayRazorpay(values, navigate, dispatch) {
         }
       },
       prefill: {
-        name: "Jeevan aj",
-        email: "ambrahamjeevan@gmail.com",
-        contact: "8086240993",
+        name: "Akhilessh N Yadav",
+        email: "akhileshkumaryadav2407@gmail.com",
+        contact: "7522089744",
       },
       theme: {
         color: "#61dafb",

@@ -2,11 +2,9 @@ import User from "../../models/user.js";
 import { errorHandler } from "../../utils/error.js";
 import bcryptjs from "bcryptjs";
 
-
 //update user
 
 export const updateUser = async (req, res, next) => {
-  
   if (req.user.id !== req.params.id) {
     return next(errorHandler(401, "you can only update your account"));
   }
@@ -25,7 +23,7 @@ export const updateUser = async (req, res, next) => {
           profilePicture: req.body.profilePicture,
         },
       },
-      { new: true }
+      { new: true },
     );
     const { password, ...rest } = updatedUser._doc;
     res.status(200).json(rest);
@@ -51,18 +49,14 @@ export const deleteUser = async (req, res, next) => {
   }
 };
 
+//signOut
 
-//signOut 
-
-export const signOut = async(req,res,next)=> {
-  try{
+export const signOut = async (req, res, next) => {
+  try {
     // res.clearCookie('access_token','refresh_token')
-    res.status(200).json({message:"signedOut successfully"})
+    res.status(200).json({ message: "signedOut successfully" });
+  } catch (error) {
+    console.log(error);
+    next(errorHandler(500, "error in signout controller"));
   }
-  catch(error){
-   console.log(error)
-   next(errorHandler(500,'error in signout controller'))
-  }
-
-}
-
+};

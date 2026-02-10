@@ -31,18 +31,18 @@ export const verifyToken = async (req, res, next) => {
       const newAccessToken = jwt.sign(
         { id: user._id },
         process.env.ACCESS_TOKEN,
-        { expiresIn: "15m" }
+        { expiresIn: "15m" },
       );
       const newRefreshToken = jwt.sign(
         { id: user._id },
         process.env.REFRESH_TOKEN,
-        { expiresIn: "7d" }
+        { expiresIn: "7d" },
       );
 
       // Update the refresh token in the database for the user
       await User.updateOne(
         { _id: user._id },
-        { refreshToken: newRefreshToken }
+        { refreshToken: newRefreshToken },
       );
 
       req.user = decoded.id; //setting req.user so that next middleware in this cycle can acess it
