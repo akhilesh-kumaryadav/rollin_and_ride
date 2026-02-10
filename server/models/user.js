@@ -1,11 +1,11 @@
-import mongoose, { Schema} from "mongoose";
-import validator from 'validator'
+import mongoose, { Schema } from "mongoose";
+import validator from "validator";
 
 const userSchema = new Schema(
   {
     username: {
       type: String,
-      required: [true, 'User name is required.'],
+      required: [true, "User name is required."],
       unique: true,
     },
     email: {
@@ -19,29 +19,24 @@ const userSchema = new Schema(
           return validator.isEmail(value);
         },
         message: (props) => {
-          `${props.value} is not a valid email address.`
-        }
-      }
+          `${props.value} is not a valid email address.`;
+        },
+      },
     },
-    phoneNumber:{
-      type:String,
-      required: [true, "Phone number is required."],
-      unique:true
-    },
-    adress:{
-      type:String,
+    adress: {
+      type: String,
     },
     password: {
       type: String,
-      required: [true, 'Password is required.'],
+      required: [true, "Password is required."],
       validate: {
         validator: (value) => {
           return validator.isStrongPassword(value);
         },
         message: (props) => {
-          `${props.value} is not a strong password.`
-        }
-      }
+          `${props.value} is not a strong password.`;
+        },
+      },
     },
     profilePicture: {
       type: String,
@@ -60,12 +55,12 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    refreshToken:{
-      type:String,
-      default:""
-    }
+    refreshToken: {
+      type: String,
+      default: "",
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const User = mongoose.model("User", userSchema);

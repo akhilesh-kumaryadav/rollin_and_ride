@@ -6,25 +6,25 @@ const vehicleSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  car_title:{
-    type:String,
-    required:false
+  car_title: {
+    type: String,
+    required: false,
   },
-  car_description:{
-    type:String,
-    required:false
+  car_description: {
+    type: String,
+    required: false,
   },
-  created_at:{
-    type:String,
-    required:false
+  created_at: {
+    type: String,
+    required: false,
   },
-  updated_at:{
-    type:String,
-    required:false
+  updated_at: {
+    type: String,
+    required: false,
   },
-  remark:{
-    type:String,
-    required:false
+  remark: {
+    type: String,
+    required: false,
   },
   company: {
     type: String,
@@ -44,8 +44,8 @@ const vehicleSchema = new mongoose.Schema({
   },
   fuel_type: {
     type: String,
-    enum:["petrol", "diesel", "electirc","hybrid"],
-    required:false
+    enum: ["petrol", "diesel", "electirc", "hybrid"],
+    required: false,
   },
   rented_by: {
     type: String,
@@ -53,7 +53,7 @@ const vehicleSchema = new mongoose.Schema({
   },
   rating: {
     type: ["1", "2", "3", "4", "5"],
-    requrired:false,
+    requrired: false,
   },
   seats: {
     type: Number,
@@ -61,11 +61,11 @@ const vehicleSchema = new mongoose.Schema({
   },
   transmition: {
     type: String,
-    enum:["manual","automatic"]
+    enum: ["manual", "automatic"],
   },
   image: {
-    type:Array,
-    required:false
+    type: Array,
+    required: false,
   },
   description: {
     type: String,
@@ -120,40 +120,39 @@ const vehicleSchema = new mongoose.Schema({
   car_type: {
     type: String,
   },
-  isDeleted:{
-    type:String,
-    default:false,
-    required:false
+  isDeleted: {
+    type: String,
+    default: false,
+    required: false,
   },
-  location:{
-    type:String,
-    required:true
+  location: {
+    type: String,
+    required: true,
   },
-  district:{
-    type:String,
-    required:true
+  district: {
+    type: String,
+    required: true,
   },
-  isBooked:{
-    type:Boolean,
-    default:false
+  isBooked: {
+    type: Boolean,
+    default: false,
   },
-  isAdminAdded:{
-    type:Boolean,
-    default:true
+  isAdminAdded: {
+    type: Boolean,
+    default: true,
   },
-  addedBy:{
-    type:String,
-    default:'admin'
+  addedBy: {
+    type: String,
+    default: "admin",
   },
-  isAdminApproved:{
-    type:Boolean,
-    default:true
+  isAdminApproved: {
+    type: Boolean,
+    default: true,
   },
-  isRejected:{
-    type:Boolean,
-    default:false
-  }
-
+  isRejected: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Vehicle = mongoose.model("Vehicle", vehicleSchema);

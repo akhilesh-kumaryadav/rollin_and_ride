@@ -5,18 +5,17 @@ import OAuth from "../../components/OAuth";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AppError } from "../../utils/AppError";
 
-//zod validation schema
 const schema = z.object({
-  username: z.string().min(3, { message: "minimum 3 characters required" }),
+  username: z.string().min(3, { message: "Minimum 3 characters required." }),
   email: z
     .string()
     .min(1, { message: "email required" })
     .refine((value) => /\S+@\S+\.\S+/.test(value), {
       message: "Invalid email address",
     }),
-  password: z.string().min(4, { message: "minimum 4 characters required" }),
-  phoneNumber: z.string()
+  password: z.string().min(4, { message: "Minimum 4 characters required." }),
 });
 
 function SignUp() {
@@ -26,30 +25,36 @@ function SignUp() {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
 
-  const [isError, setError] = useState(false);
+  const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (formData, e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
+
       setLoading(false);
-      if (data.succes === false) {
-        setError(true);
-        return;
+      if (!data.success) {
+        throw new AppError(
+          data.statusCode,
+          data.message ?? "Something went wrong.",
+        );
       }
-      setError(false);
+      setError("");
+
       navigate("/signin");
     } catch (error) {
       setLoading(false);
-      setError(true);
+      setError(error.message);
     }
   };
 
@@ -108,22 +113,6 @@ function SignUp() {
           <div>
             <input
               type="text"
-              id="phoneNumber"
-              className="text-black bg-slate-100 p-3 rounded-md w-full"
-              placeholder="Phone Number"
-              {...register("phoneNumber")}
-            />
-
-            {errors.phoneNumber && (
-              <p className="text-red-500 text-[8px] pt-1">
-                {errors.phoneNumber.message}
-              </p>
-            )}
-          </div>
-
-          <div>
-            <input
-              type="text"
               id="password"
               className="text-black bg-slate-100 p-3 rounded-md w-full"
               placeholder="Password"
@@ -150,9 +139,7 @@ function SignUp() {
                 <Link to={`/signin`}>Sign in</Link>
               </span>
             </p>
-            <p className="text-[10px] text-red-600">
-              {isError && "something went wrong"}
-            </p>
+            <p className="text-[10px] text-red-600">{error}</p>
           </div>
         </form>
         <div>

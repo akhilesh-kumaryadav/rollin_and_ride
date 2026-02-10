@@ -1,8 +1,9 @@
 {
-    "rewrites": [
-      {
-        "source": "/api/:path*",
-        "destination": "https://rent-a-ride-1.onrender.com/api/:path*"
-      }
-    ]
-  }
+  "_comment": "ATTENTION_AKKI",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://rent-a-ride-1.onrender.com/api/:path*"
+    }
+  ]
+}

@@ -47,11 +47,11 @@ export async function availableAtDate(pickupDate, dropOffDate) {
         pickupDate: { $lt: dropOffDate },
         dropOffDate: { $gt: pickupDate },
       },
-      { vehicleId: 1 }
+      { vehicleId: 1 },
     );
 
     const vehicleIdsWithCompletedTrips = vehiclesWithCompletedTrips.map(
-      (booking) => booking.vehicleId
+      (booking) => booking.vehicleId,
     );
 
     const vehiclesWithoutBookings = await Vehicle.find({

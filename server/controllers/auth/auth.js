@@ -14,7 +14,7 @@ export const signUp = async (req, res, next) => {
   try {
     signUpValidator({ bodyParams: req.body });
 
-    const { username, email, password, phoneNumber } = req.body;
+    const { username, email, password } = req.body;
 
     const hashedPassword = await bcryptjs.hashSync(password, 10);
 
@@ -22,22 +22,18 @@ export const signUp = async (req, res, next) => {
       username,
       email,
       password: hashedPassword,
-      phoneNumber,
       isUser: true,
     });
 
     await user.save();
 
-    res
-      .status(OK)
-      .json({ success: true, message: "New User added successfully." });
+    res.status(OK).json({ success: true, message: "User added successfully." });
   } catch (error) {
     console.log(error);
     next(error);
   }
 };
 
-//refreshTokens
 export const refreshToken = async (req, res, next) => {
   // const refreshToken = req.cookies.refresh_token;
 
@@ -69,12 +65,12 @@ export const refreshToken = async (req, res, next) => {
     const newAccessToken = Jwt.sign(
       { id: user._id },
       process.env.ACCESS_TOKEN,
-      { expiresIn: "15m" }
+      { expiresIn: "15m" },
     );
     const newRefreshToken = Jwt.sign(
       { id: user._id },
       process.env.REFRESH_TOKEN,
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
     );
 
     // Update the refresh token in the database for the user
@@ -110,7 +106,7 @@ export const signIn = async (req, res, next) => {
 
     let user = await User.findOne({ email }, { password: 1 });
     if (!user) {
-      throw new AppError("User not found.", NOT_FOUND);
+      throw new AppError("Invalid credentials.", NOT_FOUND);
     }
 
     const isValidPassword = bcryptjs.compareSync(password, user.password);
@@ -118,25 +114,17 @@ export const signIn = async (req, res, next) => {
       throw new AppError("Invalid credentials", UNAUTHORIZED);
     }
 
-    const accessToken = jwt.sign(
-      { id: user._id },
-      process.env.ACCESS_TOKEN,
-      {
-        expiresIn: "15m",
-      }
-    );
-    const refreshToken = jwt.sign(
-      { id: user._id },
-      process.env.REFRESH_TOKEN,
-      {
-        expiresIn: "7d",
-      }
-    );
+    const accessToken = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN, {
+      expiresIn: "15m",
+    });
+    const refreshToken = jwt.sign({ id: user._id }, process.env.REFRESH_TOKEN, {
+      expiresIn: "7d",
+    });
 
     await User.findByIdAndUpdate(
       { _id: user._id },
       { refreshToken },
-      { new: true }
+      { new: true },
     );
 
     // const updatedData = await User.findByIdAndUpdate(
@@ -165,24 +153,30 @@ export const signIn = async (req, res, next) => {
     // ATTENTION cookie is not getting sent to postman
     res.cookie("access_token", accessToken, {
       expires: expireDate,
-      httpOnly: true,
-      maxAge: 900000,
-      sameSite: "None",
-      secure: true,
-      domain: "rent-a-ride-two.vercel.app" // ATTENTION
-    })
+      // httpOnly: true,
+      // maxAge: 900000,
+      // sameSite: "None",
+      // secure: true,
+      // domain: "rent-a-ride-two.vercel.app", // ATTENTION
+    });
     res.cookie("refresh_token", refreshToken, {
-      
       httpOnly: true,
-      maxAge: 604800000,
-      sameSite: "None",
-      secure: true,
-      domain: "rent-a-ride-two.vercel.app" // ATTENTION
-    })
+      // maxAge: 604800000,
+      // sameSite: "None",
+      // secure: true,
+      // domain: "rent-a-ride-two.vercel.app", // ATTENTION
+    });
 
-    user = await User.findOne({ email },);
+    user = await User.findOne({ email });
 
-    res.status(OK).json({success: true, message: "User logged in successfully.", accessToken: user.accessToken, refreshToken: user.refreshToken,  isAdmin:user.isAdmin, isUser: user.isUser});
+    res.status(OK).json({
+      success: true,
+      message: "User logged in successfully.",
+      accessToken: user.accessToken,
+      refreshToken: user.refreshToken,
+      isAdmin: user.isAdmin,
+      isUser: user.isUser,
+    });
 
     next();
   } catch (error) {

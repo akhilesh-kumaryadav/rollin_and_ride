@@ -10,50 +10,47 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { cloudinaryConfig } from "./utils/cloudinaryConfig.js";
 
-const App = express();
+const app = express();
 
-App.use(express.json());
-App.use(cookieParser());
+app.use(
+  cors({
+    origin: [`http://localhost:${process.env.PORT}`],
+    // methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
+    credentials: true,
+  }),
+);
+
+app.use(express.json());
+app.use(cookieParser());
+app.use("*", cloudinaryConfig);
+
+app.use("/api/user", userRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/admin", adminRoute);
+app.use("/api/vendor", vendorRoute);
+
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode ?? 500;
+
+  return res.status(statusCode).json({
+    success: false,
+    message: err.message ?? "Something went wrong.",
+    statusCode,
+  });
+});
 
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connection Established to MongoDB Database.");
-    App.listen(process.env.PORT, () => {
-      console.log(`Rollin & Ride Server is Up and Listening!!! @ http://localhost:${process.env.PORT}`);
+
+    app.listen(process.env.PORT, () => {
+      console.log(
+        `Rollin & Ride Server is Up and Listening!!! @port :${process.env.PORT}`,
+      );
     });
   })
-  .catch((error) => console.error(error));
-
-const allowedOrigins = [
-  "https://rent-a-ride-two.vercel.app",
-  `http://localhost:${process.env.PORT}`,
-]; // Add allowed origins here
-
-App.use(
-  cors({
-    origin: allowedOrigins,
-    methods: ["GET", "PUT", "POST", "PATCH", "DELETE"],
-    credentials: true, // Enables the Access-Control-Allow-Credentials header
-  })
-);
-
-App.use("*", cloudinaryConfig);
-
-// App.get('/*', (req, res) => res.sendFile(resolve(__dirname, '../public/index.html')));
-
-App.use("/api/user", userRoute);
-App.use("/api/auth", authRoute);
-App.use("/api/admin", adminRoute);
-App.use("/api/vendor", vendorRoute);
-
-App.use((err, req, res, next) => {
-  const statusCode = err.statusCode ?? 500;
-  const message = err.message ?? "Internal Server Error";
-
-  return res.status(statusCode).json({
-    succes: false,
-    message,
-    statusCode,
+  .catch((error) => {
+    console.log("Database connection failed.");
+    console.error(error);
   });
-});

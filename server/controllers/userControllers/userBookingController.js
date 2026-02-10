@@ -60,15 +60,16 @@ export const razorpayOrder = async (req, res, next) => {
     const { totalPrice, dropoff_location, pickup_district, pickup_location } =
       req.body;
 
-    console.log(totalPrice)
+    console.log(totalPrice);
     if (
       !totalPrice ||
       !dropoff_location ||
       !pickup_district ||
       !pickup_location
     ) {
-
-      return next(errorHandler(400, "Missing Required Feilds Process Cancelled")) ;
+      return next(
+        errorHandler(400, "Missing Required Feilds Process Cancelled"),
+      );
     }
     const instance = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
@@ -110,7 +111,7 @@ export const getVehiclesWithoutBooking = async (req, res, next) => {
 
     const vehiclesAvailableAtDate = await availableAtDate(
       pickupDate,
-      dropOffDate
+      dropOffDate,
     );
 
     if (!vehiclesAvailableAtDate) {
@@ -124,7 +125,7 @@ export const getVehiclesWithoutBooking = async (req, res, next) => {
       (cur) =>
         cur.district === pickUpDistrict &&
         cur.location == pickUpLocation &&
-        cur.isDeleted === "false"
+        cur.isDeleted === "false",
     );
 
     if (!availableVehicles) {
@@ -150,7 +151,7 @@ export const getVehiclesWithoutBooking = async (req, res, next) => {
   } catch (error) {
     console.log(error);
     return next(
-      errorHandler(500, "An error occurred while fetching available vehicles.")
+      errorHandler(500, "An error occurred while fetching available vehicles."),
     );
   }
 };
@@ -404,14 +405,14 @@ export const sendBookingDetailsEamil = (req, res, next) => {
                 bookingDetails.pickUpLocation
               }</p>
               <p><strong>Pickup Date:</strong> ${pickupDate.getDate()}/${
-        pickupDate.getMonth() + 1
-      }/${pickupDate.getFullYear()} ${pickupDate.getHours()}:${pickupDate.getMinutes()}</p>
+                pickupDate.getMonth() + 1
+              }/${pickupDate.getFullYear()} ${pickupDate.getHours()}:${pickupDate.getMinutes()}</p>
               <p><strong>Dropoff Location:</strong> ${
                 bookingDetails.dropOffLocation
               }</p>
               <p><strong>Dropoff Date:</strong> ${dropOffDate.getDate()}/${
-        dropOffDate.getMonth() + 1
-      }/${dropOffDate.getFullYear()} ${dropOffDate.getHours()}:${dropOffDate.getMinutes()}</p>
+                dropOffDate.getMonth() + 1
+              }/${dropOffDate.getFullYear()} ${dropOffDate.getHours()}:${dropOffDate.getMinutes()}</p>
               <h2>Vehicle Details</h2>
               <hr>
               <p><strong>Vehicle Number:</strong> ${

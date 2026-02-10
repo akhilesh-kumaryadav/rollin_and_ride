@@ -4,16 +4,14 @@ import defaultTheme from "tailwindcss/defaultTheme";
 // import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
 
 const tailwindConfig = {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       backgroundImage: {
-        'hero-pattern':
+        "hero-pattern":
+          // ATTENTION_AKKI
           "url('/Users/jeevan/copy/Rent a drive/client/src/pages/admin/data/welcome-bg.svg')",
-      }
+      },
     },
   },
   plugins: [
@@ -36,7 +34,7 @@ const tailwindConfig = {
 
 const combinedConfig = {
   ...defaultTheme, // Merge defaultTheme
-  ...tailwindConfig // Merge tailwindConfig
+  ...tailwindConfig, // Merge tailwindConfig
 };
 
 export default combinedConfig;

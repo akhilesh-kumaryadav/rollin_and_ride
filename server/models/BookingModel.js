@@ -15,11 +15,19 @@ const userSchema = new mongoose.Schema({
   razorpayOrderId: { type: String, required: true },
   razorpayPaymentId: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
-  status:{
-    type:String,
-    enum:["notBooked","booked","onTrip","notPicked","canceled","overDue","tripCompleted"],
-    default:"notBooked"
-  }
+  status: {
+    type: String,
+    enum: [
+      "notBooked",
+      "booked",
+      "onTrip",
+      "notPicked",
+      "canceled",
+      "overDue",
+      "tripCompleted",
+    ],
+    default: "notBooked",
+  },
 });
 
 const Booking = mongoose.model("Booking", userSchema);

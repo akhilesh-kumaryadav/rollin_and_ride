@@ -56,7 +56,7 @@ export const checkAvailability = async (req, res, next) => {
 
     const sixHoursLater = new Date(dropOffDate);
     sixHoursLater.setTime(sixHoursLater.getTime() + 6 * 60 * 60 * 1000);
-    console.log(sixHoursLater)
+    console.log(sixHoursLater);
 
     //checking data base  find overlapping pickup and dropoffDates
     const existingBookings = await Booking.find({
@@ -80,8 +80,8 @@ export const checkAvailability = async (req, res, next) => {
       return next(
         errorHandler(
           400,
-          "Vehicle is not available for the specified time period"
-        )
+          "Vehicle is not available for the specified time period",
+        ),
       );
     }
 

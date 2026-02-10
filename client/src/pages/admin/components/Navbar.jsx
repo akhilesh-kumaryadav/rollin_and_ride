@@ -10,15 +10,15 @@ import { BsChatLeft } from "react-icons/bs";
 import { RiNotification3Line } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-import {  Chat, Notification, UserProfile } from ".";
+import { Chat, Notification, UserProfile } from ".";
 import profiile from "../../../Assets/profile dummy image.png";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const {  chat, notification, userProfile, screenSize } = useSelector(
-    (state) => state.adminDashboardSlice
+  const { chat, notification, userProfile, screenSize } = useSelector(
+    (state) => state.adminDashboardSlice,
   );
 
   useEffect(() => {
@@ -76,8 +76,6 @@ const Navbar = () => {
       </div>
 
       <div className="flex justify-between">
-       
-
         <NavButton
           title="Chat"
           customFunc={() => dispatch(openPages("chat"))}
@@ -102,17 +100,28 @@ const Navbar = () => {
             <p>
               <span className="text-[12px] text-gray-400">Hi,</span>{" "}
               <span className="text-gray-400 font-semi-bold  text-[12px]">
-                Jeevan
+                Akki
               </span>
             </p>
             <MdKeyboardArrowDown />
           </div>
         </TooltipComponent>
 
-        
-        {chat && <div className="relative top-9 right-0"><Chat /></div>}
-        {notification && <div className="relative top-9 right-0"><Notification /></div>}
-        {userProfile && <div className="relative top-9 right-0"><UserProfile /></div>}
+        {chat && (
+          <div className="relative top-9 right-0">
+            <Chat />
+          </div>
+        )}
+        {notification && (
+          <div className="relative top-9 right-0">
+            <Notification />
+          </div>
+        )}
+        {userProfile && (
+          <div className="relative top-9 right-0">
+            <UserProfile />
+          </div>
+        )}
       </div>
     </div>
   );
